@@ -12,14 +12,6 @@ from pydub import AudioSegment
 
 load_dotenv()
 
-# # Initialize the Kokoro TTS pipeline
-    # pipeline = KPipeline(lang_code="a")
-
-    # # Assign different voices for speakers
-    # speaker_voices = {
-    #     "JANE": "af_bella",  # Example female voice
-    #     "MIKE": "am_adam"   # Example male voice
-    # }
 
 class PodCastGenerator():
     def __init__(self,lang_code = 'a'):
@@ -70,14 +62,6 @@ class PodCastGenerator():
                 segments.append({'speaker': speaker, 'text': text})
         return segments
 
-    # def synthesize_speech(self,text: str, speaker: str, index: int):
-    #     """Generate speech using Kokoro for each podcast segment."""
-    #     voice = self.speaker_voices.get(speaker, "af_bella")  # Default fallback voice
-    #     generator = self.pipeline(text, voice=voice, speed=1, split_pattern=r'\n+')
-
-    #     for _, _, audio in generator:
-    #         sf.write(f"{index}_{speaker}.wav", audio, 24000)
-
     def synthesize_speech(self, text: str, speaker: str, index: int):
         """Generate speech using Kokoro for each podcast segment and yield file names."""
         voice = self.speaker_voices.get(speaker, "af_bella")  # Default fallback voice
@@ -120,11 +104,7 @@ class PodCastGenerator():
         final_file = self.merge_audio(segment_files)
         return final_file
 
-# Example usage
-if __name__ == "__main__":
-    podcast_creator = PodCastGenerator()
-    final_podcast = podcast_creator.create_podcast("The Future of AI")
-    print(f"Podcast created: {final_podcast}")
+
 
 
 
