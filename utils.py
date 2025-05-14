@@ -69,34 +69,31 @@ def synthesize_speech(text: str, speaker: str, index: int):
         sf.write(f"{index}_{speaker}.wav", audio, 24000)
 
 
+# def merge_audio(segment_files):
+#     """Merge individual speech segments into a full podcast."""
+#     podcast = AudioSegment.empty()
+#     for file in segment_files:
+#         segment = AudioSegment.from_file(file)
+#         podcast += segment + AudioSegment.silent(duration=300)  # Add pauses for realism
+#     podcast.export("final_podcast.mp3", format="mp3")
+
+import os
 
 def merge_audio(segment_files):
-    """Merge individual speech segments into a full podcast."""
+    """Merge individual speech segments into a full podcast and clean up temporary files."""
     podcast = AudioSegment.empty()
+    
     for file in segment_files:
         segment = AudioSegment.from_file(file)
         podcast += segment + AudioSegment.silent(duration=300)  # Add pauses for realism
-    podcast.export("final_podcast.mp3", format="mp3")
+    
+    final_output = "final_podcast.mp3"
+    podcast.export(final_output, format="mp3")
+    
+    # Ensure final podcast exists before deleting temporary files
+    if os.path.exists(final_output):
+        for file in segment_files:
+            os.remove(file)
+    
+    return final_output
 
-
-# if __name__ == "__main__":
-#     # Example topic for generating a podcast script
-#     subject = "Future of Agents in AI."
-#     podcast_script = generate_podcast(subject)
-
-#     print("Generated Podcast Script:")
-#     print(podcast_script)
-
-#     segments = parse_podcast_script(podcast_script)
-#     print("Generated Parsed Segments:")
-#     print(segments)
-
-#     # Generate speech files for each speaker
-#     segment_files = []
-#     for idx, segment in enumerate(segments):
-#         filename = f"{idx}_{segment['speaker']}.wav"
-#         synthesize_speech(segment["text"], segment["speaker"], idx)
-#         segment_files.append(filename)
-
-#     # Merge audio files into a complete podcast
-#     merge_audio(segment_files)

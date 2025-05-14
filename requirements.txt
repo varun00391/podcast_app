@@ -2,3 +2,4 @@ kokoro
 soundfile
 langchain-community
 langchain-groq
+python-dotenv
