@@ -18,6 +18,8 @@ Develop a natural, conversational flow between the two hosts named Jane and Mike
 - Clear explanations of complex topics
 - An engaging and lively tone to captivate listeners. Learning should be fun!
 - A balance of information and entertainment
+- The discussion should logically progress through at least 3-5 distinct sub-topics or phases, each with significant back-and-forth between the hosts.
+- Ensure enough depth in each segment to support a longer conversation.
 Rules for the dialogue:
 - The female host (Jane) always initiates the conversation and interviews the guest
 - Include thoughtful questions from the host to guide the discussion

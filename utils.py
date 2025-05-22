@@ -27,10 +27,10 @@ class PodCastGenerator():
         """Ask the LLM for a script of a podcast given by two hosts."""
         messages = [
             SystemMessage(content=SYSTEM_PROMPT),
-            HumanMessage(content=f"Here is the topic: {subject[:50]}")
+            HumanMessage(content=f"Here is the topic: {subject[:200]}")
         ]
 
-        llm = ChatGroq(model="meta-llama/llama-4-scout-17b-16e-instruct", temperature=0)
+        llm = ChatGroq(model="meta-llama/llama-4-scout-17b-16e-instruct", temperature=0.7,max_tokens=4000)
 
         try:
             response = llm.invoke(messages)
