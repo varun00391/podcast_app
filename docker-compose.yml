@@ -1,0 +1,29 @@
+version: '3.8' # Specify the Docker Compose file format version
+
+services:
+  podcast-generator:
+    build: . # Tells Docker Compose to build the image using the Dockerfile in the current directory
+    container_name: podcast_generator_app # A friendly name for your running container
+    ports:
+      - "8501:8501" # Maps host port 8501 to container port 8501
+    env_file:
+      - .env # Loads environment variables from the .env file in the current directory
+    volumes:
+      # Optional: Mount your app code for easier development (live updates)
+      # - ./app.py:/app/app.py
+      # - ./utils.py:/app/utils.py
+      # - ./requirements.txt:/app/requirements.txt
+      # - ./Dockerfile:/app/Dockerfile
+      # For production, you typically remove volumes for code to use the image's baked-in code.
+      # However, if your kokoro_tts generates temporary files that need to persist or be cleaned,
+      # you might want a volume for a 'data' directory.
+      # For this specific app, the current logic handles temp files, so no specific volume for output is essential
+      # unless you want the 'final_podcast.mp3' to persist outside the container.
+      # If you want final_podcast.mp3 to be available on your host:
+      - ./output:/app/output # Map a local 'output' folder to /app/output in container
+                               # Ensure your Python code exports to /app/output/final_podcast.mp3
+                               # or modify your merge_audio function to take an output path.
+                               # If final_podcast.mp3 is always in /app, it will be lost if container is removed.
+    restart: on-failure # Automatically restart the container if it exits with a non-zero status
+    # Optional: If you need to override the CMD from Dockerfile (not needed here as CMD is correct)
+    # command: streamlit run app.py --server.port=8501 --server.address=0.0.0.0
